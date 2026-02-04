@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Sidbae ❤️</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -17,23 +17,74 @@
             overflow: hidden;
             touch-action: none;
         }
-        .header { font-size: 80px; margin-bottom: 10px; }
-        h1 { color: #ff4d6d; font-size: 1.8rem; padding: 0 20px; margin-bottom: 40px; }
-        .btn-container { position: relative; width: 100%; height: 300px; display: flex; justify-content: center; align-items: center; }
-        #yesBtn { background-color: #ff4d6d; color: white; padding: 15px 40px; font-size: 1.5rem; border: none; border-radius: 50px; cursor: pointer; z-index: 10; font-weight: bold; transition: transform 0.2s; }
-        #noBtn { background-color: #6c757d; color: white; padding: 10px 25px; font-size: 1rem; border: none; border-radius: 50px; position: absolute; cursor: pointer; z-index: 5; transition: 0.1s; }
+        .header-icon { font-size: 80px; margin-bottom: 20px; }
+        h1 { color: #ff4d6d; font-size: 1.8rem; text-align: center; padding: 0 20px; margin-bottom: 40px; line-height: 1.3; }
+        .main-container { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #yesBtn { 
+            background-color: #ff4d6d; color: white; 
+            padding: 15px 45px; font-size: 1.6rem; 
+            border: none; border-radius: 50px; 
+            cursor: pointer; font-weight: bold; 
+            z-index: 10; transition: transform 0.2s ease;
+        }
+        #noBtn { 
+            background-color: #6c757d; color: white; 
+            padding: 10px 25px; font-size: 1.1rem; 
+            border: none; border-radius: 50px; 
+            position: absolute; cursor: pointer; 
+            z-index: 5; transition: 0.1s ease-out;
+        }
         .hidden { display: none !important; }
-        #success { display: none; flex-direction: column; align-items: center; }
+        #success-screen { display: none; flex-direction: column; align-items: center; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="quiz">
-        <div class="header">💝</div>
+    <div id="quiz-screen" class="main-container">
+        <div class="header-icon">💝</div>
         <h1>Will you be my Valentine, Sidbae?</h1>
-        <div class="btn-container">
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <div id="success-screen" class="main-container">
+        <div class="header-icon">🎉</div>
+        <h1>I KNEW IT!<br>Happy Valentine's Day! ❤️</h1>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const quiz = document.getElementById('quiz-screen');
+        const success = document.getElementById('success-screen');
+        let currentScale = 1;
+
+        function teleport() {
+            // Keep the button within the middle 80% of the screen so it doesn't vanish
+            const x = Math.random() * (window.innerWidth - 120) + 20;
+            const y = Math.random() * (window.innerHeight - 120) + 20;
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.position = 'fixed'; // Overrides any relative positioning
+            
+            currentScale += 0.4;
+            yesBtn.style.transform = `scale(${currentScale})`;
+        }
+
+        noBtn.addEventListener('mouseover', teleport);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            teleport();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            quiz.classList.add('hidden');
+            success.style.display = 'flex';
+        });
+    </script>
+</body>
+</html>
         </div>
     </div>
 
