@@ -68,8 +68,7 @@ h1 {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.35s ease-out;
-    will-change: transform;
+    transition: left 0.35s ease, top 0.35s ease;
 }
 
 .hidden {
@@ -119,30 +118,48 @@ const success = document.getElementById("success");
 
 let scale = 1;
 
-// Track position explicitly
-let posX = 0;
-let posY = 0;
+// Initial placement
+centerNo();
 
-function moveNo() {
+function centerNo() {
+    const rect = wrapper.getBoundingClientRect();
+    noBtn.style.left = rect.width / 2 - noBtn.offsetWidth / 2 + "px";
+    noBtn.style.top = rect.height * 0.6 + "px";
+}
+
+function dodge(event) {
     const rect = wrapper.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
-    const maxX = rect.width - btnRect.width;
-    const maxY = rect.height - btnRect.height;
+    const pointerX = event.touches ? event.touches[0].clientX : event.clientX;
+    const pointerY = event.touches ? event.touches[0].clientY : event.clientY;
 
-    posX = Math.random() * maxX;
-    posY = Math.random() * maxY;
+    let x = btnRect.left - rect.left;
+    let y = btnRect.top - rect.top;
 
-    noBtn.style.transform = `translate3d(${posX}px, ${posY}px, 0)`;
+    const dx = x + btnRect.width / 2 - (pointerX - rect.left);
+    const dy = y + btnRect.height / 2 - (pointerY - rect.top);
+
+    const escapeDistance = 140;
+
+    x += dx > 0 ? escapeDistance : -escapeDistance;
+    y += dy > 0 ? escapeDistance : -escapeDistance;
+
+    // Clamp inside wrapper
+    x = Math.max(0, Math.min(x, rect.width - btnRect.width));
+    y = Math.max(0, Math.min(y, rect.height - btnRect.height));
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
 
     scale = Math.min(scale + 0.35, 3);
     yesBtn.style.transform = `scale(${scale})`;
 }
 
-noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("mouseenter", dodge);
 noBtn.addEventListener("touchstart", (e) => {
     e.preventDefault();
-    moveNo();
+    dodge(e);
 });
 
 yesBtn.addEventListener("click", () => {
