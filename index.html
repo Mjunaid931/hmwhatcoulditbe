@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Sidbae ❤️</title>
+    <title>Wait for it...</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -16,13 +16,18 @@
             overflow: hidden;
             touch-action: none;
         }
-        .container {
+        #main-wrapper {
             text-align: center;
             width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
-        .heart { font-size: 80px; margin-bottom: 20px; }
-        h1 { color: #ff4d6d; font-size: 2rem; margin-bottom: 40px; line-height: 1.2; }
+        h1 { color: #ff4d6d; font-size: 2rem; margin-bottom: 40px; pointer-events: none; }
+        .icon { font-size: 80px; margin-bottom: 20px; }
         
         #yesBtn {
             background-color: #ff4d6d;
@@ -31,9 +36,75 @@
             font-size: 1.6rem;
             border: none;
             border-radius: 50px;
-            cursor: pointer;
             font-weight: bold;
+            z-index: 10;
             transition: transform 0.2s ease;
+        }
+        
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            position: fixed;
+            z-index: 20;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: 0.1s ease-out;
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+        <div id="quiz">
+            <div class="icon">💝</div>
+            <h1>Will you be my Valentine, Sidbae?</h1>
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+
+        <div id="success" class="hidden">
+            <div class="icon">🎉</div>
+            <h1>I KNEW IT!<br>See you on the 14th! ❤️</h1>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const quiz = document.getElementById('quiz');
+        const success = document.getElementById('success');
+        let currentScale = 1;
+
+        function teleport() {
+            const x = Math.random() * (window.innerWidth - 140) + 70;
+            const y = Math.random() * (window.innerHeight - 140) + 70;
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+            noBtn.style.transform = 'translate(-50%, -50%)';
+            
+            currentScale += 0.4;
+            yesBtn.style.transform = `scale(${currentScale})`;
+        }
+
+        noBtn.addEventListener('mouseover', teleport);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            teleport();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            quiz.classList.add('hidden');
+            success.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
             display: inline-block;
         }
         
