@@ -1,214 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wait for it...</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff0f3;
-            font-family: sans-serif;
-            overflow: hidden;
-            touch-action: none;
-        }
-        #main-wrapper {
-            text-align: center;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        h1 { color: #ff4d6d; font-size: 2rem; margin-bottom: 40px; pointer-events: none; }
-        .icon { font-size: 80px; margin-bottom: 20px; }
-        
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            padding: 15px 45px;
-            font-size: 1.6rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            z-index: 10;
-            transition: transform 0.2s ease;
-        }
-        
-        #noBtn {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            position: fixed;
-            z-index: 20;
-            top: 65%;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: 0.1s ease-out;
-        }
-        .hidden { display: none !important; }
-    </style>
-</head>
-<body>
-
-    <div id="main-wrapper">
-        <div id="quiz">
-            <div class="icon">💝</div>
-            <h1>Will you be my Valentine, Sidbae?</h1>
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
-        </div>
-
-        <div id="success" class="hidden">
-            <div class="icon">🎉</div>
-            <h1>I KNEW IT!<br>See you on the 14th! ❤️</h1>
-        </div>
-    </div>
-
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const quiz = document.getElementById('quiz');
-        const success = document.getElementById('success');
-        let currentScale = 1;
-
-        function teleport() {
-            const x = Math.random() * (window.innerWidth - 140) + 70;
-            const y = Math.random() * (window.innerHeight - 140) + 70;
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
-            noBtn.style.transform = 'translate(-50%, -50%)';
-            
-            currentScale += 0.4;
-            yesBtn.style.transform = `scale(${currentScale})`;
-        }
-
-        noBtn.addEventListener('mouseover', teleport);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            teleport();
-        });
-
-        yesBtn.addEventListener('click', () => {
-            quiz.classList.add('hidden');
-            success.classList.remove('hidden');
-        });
-    </script>
-</body>
-</html>
-            display: inline-block;
-        }
-        
-        #noBtn {
-            background-color: #6c757d;
-            color: white;
-            padding: 10px 25px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            position: fixed; /* Ensures it teleports relative to the whole screen */
-            cursor: pointer;
-            transition: 0.1s ease-out;
-            top: 60%; /* Starting position */
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .hidden { display: none !important; }
-    </style>
-</head>
-<body>
-
-    <div id="quiz" class="container">
-        <div class="heart">💝</div>
-        <h1>Will you be my Valentine, Sidbae?</h1>
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
-    </div>
-
-    <div id="success" class="container hidden">
-        <div class="heart">🎉</div>
-        <h1>I KNEW IT!<br>See you on the 14th! ❤️</h1>
-    </div>
-
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const quiz = document.getElementById('quiz');
-        const success = document.getElementById('success');
-        let currentScale = 1;
-
-        function moveButton() {
-            // Randomly move within 10% to 90% of screen height/width
-            const x = Math.random() * (window.innerWidth - 150) + 75;
-            const y = Math.random() * (window.innerHeight - 150) + 75;
-            
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
-            noBtn.style.transform = 'translate(-50%, -50%)';
-            
-            // Make "Yes" grow
-            currentScale += 0.4;
-            yesBtn.style.transform = `scale(${currentScale})`;
-        }
-
-        // Desktop and Mobile triggers
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
-
-        // Toggle screens
-        yesBtn.addEventListener('click', () => {
-            quiz.classList.add('hidden');
-            success.classList.remove('hidden');
-        });
-    </script>
-</body>
-</html>
-        .hidden { display: none !important; }
-        #success-screen { display: none; flex-direction: column; align-items: center; text-align: center; }
-    </style>
-</head>
-<body>
-
-    <div id="quiz-screen" class="main-container">
-        <div class="header-icon">💝</div>
-        <h1>Will you be my Valentine, Sidbae?</h1>
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
-    </div>
-
-    <div id="success-screen" class="main-container">
-        <div class="header-icon">🎉</div>
-        <h1>I KNEW IT!<br>Happy Valentine's Day! ❤️</h1>
-    </div>
-
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const quiz = document.getElementById('quiz-screen');
-        const success = document.getElementById('success-screen');
-        let currentScale = 1;
-
-        function teleport() {
-            // Keep the button within the middle 80% of the screen so it doesn't vanish
-            const x = Math.random() * (window.innerWidth - 120) + 20;
-            const y = Math.random() * (window.innerHeight - 120) + 20;
-            
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wait for it...</title>
@@ -256,7 +48,7 @@ h1 {
 
 #yesBtn {
     background-color: #ff4d6d;
-    color: #fff;
+    color: white;
     padding: 15px 45px;
     font-size: 1.6rem;
     border: none;
@@ -269,7 +61,7 @@ h1 {
 #noBtn {
     position: absolute;
     background-color: #6c757d;
-    color: #fff;
+    color: white;
     padding: 10px 25px;
     font-size: 1.1rem;
     border: none;
@@ -279,7 +71,7 @@ h1 {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Confetti */
@@ -287,9 +79,8 @@ h1 {
     position: fixed;
     width: 10px;
     height: 10px;
-    background-color: red;
     top: -10px;
-    animation: fall 2.5s linear forwards;
+    animation: fall 2.8s linear forwards;
 }
 
 @keyframes fall {
@@ -302,6 +93,7 @@ h1 {
 </head>
 
 <body>
+
 <div id="main-wrapper">
     <div id="quiz">
         <div class="icon">💝</div>
@@ -354,17 +146,18 @@ yesBtn.addEventListener("click", () => {
 function launchConfetti() {
     for (let i = 0; i < 80; i++) {
         const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-
+        confetti.className = "confetti";
         confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
-        confetti.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+        confetti.style.backgroundColor =
+            `hsl(${Math.random() * 360}, 100%, 60%)`;
+        confetti.style.animationDuration =
+            2 + Math.random() * 1.5 + "s";
 
         document.body.appendChild(confetti);
-
         setTimeout(() => confetti.remove(), 3000);
     }
 }
 </script>
+
 </body>
 </html>
