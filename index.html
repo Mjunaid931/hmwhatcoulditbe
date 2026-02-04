@@ -206,142 +206,165 @@
             const x = Math.random() * (window.innerWidth - 120) + 20;
             const y = Math.random() * (window.innerHeight - 120) + 20;
             
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
-            noBtn.style.position = 'fixed'; // Overrides any relative positioning
-            
-            currentScale += 0.4;
-            yesBtn.style.transform = `scale(${currentScale})`;
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wait for it...</title>
 
-        noBtn.addEventListener('mouseover', teleport);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            teleport();
-        });
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        yesBtn.addEventListener('click', () => {
-            quiz.classList.add('hidden');
-            success.style.display = 'flex';
-        });
-    </script>
-</body>
-</html>
-        </div>
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff0f3;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+#main-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    max-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    color: #ff4d6d;
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+#yesBtn {
+    background-color: #ff4d6d;
+    color: #fff;
+    padding: 15px 45px;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+#noBtn {
+    position: absolute;
+    background-color: #6c757d;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.35s ease-out;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    top: -10px;
+    animation: fall 2.5s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+<div id="main-wrapper">
+    <div id="quiz">
+        <div class="icon">💝</div>
+        <h1>Will you be my Valentine, Sidbae?</h1>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
     </div>
 
-    <div id="success">
-        <div class="header">🎊</div>
-        <h1 style="color: #ff4d6d;">I KNEW IT!<br>See you on the 14th! ❤️</h1>
+    <div id="success" class="hidden">
+        <div class="icon">🎉</div>
+        <h1>I KNEW IT!<br>See you on the 14th! ❤️</h1>
     </div>
+</div>
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const quiz = document.getElementById('quiz');
-        const success = document.getElementById('success');
-        let scale = 1;
+<script>
+const wrapper = document.getElementById("main-wrapper");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const quiz = document.getElementById("quiz");
+const success = document.getElementById("success");
 
-        function moveNo() {
-            // Limits movement to the middle of the screen
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            
-            // Make Yes bigger
-            scale += 0.4;
-            yesBtn.style.transform = `scale(${scale})`;
-        }
+let scale = 1;
 
-        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
-        noBtn.addEventListener('mouseover', moveNo);
+function glideNo() {
+    const rect = wrapper.getBoundingClientRect();
+    const maxX = rect.width - noBtn.offsetWidth;
+    const maxY = rect.height - noBtn.offsetHeight;
 
-        yesBtn.addEventListener('click', () => {
-            quiz.classList.add('hidden');
-            success.style.display = 'flex';
-        });
-    </script>
-</body>
-</html>
-    <div id="success" class="container hidden">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6NmZ6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R/108m89W9S6H0aA/giphy.gif">
-        <h1 style="color: #ff4d6d;">I knew it! Happy Valentine's Day! 🥰</h1>
-    </div>
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        let scale = 1;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
-        function escape() {
-            const vh = window.innerHeight;
-            const vw = window.innerWidth;
-            // Keep button 100px away from edges
-            const x = Math.random() * (vw - 150) + 50;
-            const y = Math.random() * (vh - 150) + 50;
-            
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            
-            scale += 0.5;
-            yesBtn.style.transform = `scale(${scale})`;
-        }
+    scale = Math.min(scale + 0.35, 3);
+    yesBtn.style.transform = `scale(${scale})`;
+}
 
-        noBtn.addEventListener('mouseover', escape);
-        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); escape(); });
+noBtn.addEventListener("mouseenter", glideNo);
+noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    glideNo();
+});
 
-        yesBtn.addEventListener('click', () => {
-            document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('success').classList.remove('hidden');
-        });
-    </script>
-</body>
-</html>
-            <button id="yesBtn">Yes</button>
-            <button id="noBtn">No</button>
-        </div>
-    </div>
+yesBtn.addEventListener("click", () => {
+    quiz.classList.add("hidden");
+    success.classList.remove("hidden");
+    launchConfetti();
+});
 
-    <div id="success" class="container hidden">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR3eHByZzR3eHByZzR3eHByZzR3eHByZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v1.Y2lkPTc5MGI3NjExbXN6NmZ6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R6Z3R/108m89W9S6H0aA/giphy.gif" alt="Happy bear">
-        <h1 style="color: #ff4d6d;">Great choice! Best Valentine's ever! 🥂</h1>
-    </div>
+function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
 
-    <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const quiz = document.getElementById('quiz');
-        const success = document.getElementById('success');
-        let scale = 1;
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        confetti.style.animationDuration = 2 + Math.random() * 1.5 + "s";
 
-        function moveButton() {
-            // Calculate random positions within the visible screen area
-            const padding = 50;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
-            
-            noBtn.style.left = `${Math.max(padding, x)}px`;
-            noBtn.style.top = `${Math.max(padding, y)}px`;
-            
-            // Grow the Yes button
-            scale += 0.5;
-            yesBtn.style.transform = `scale(${scale})`;
-        }
+        document.body.appendChild(confetti);
 
-        // Mouse hover for desktop
-        noBtn.addEventListener('mouseover', moveButton);
-        
-        // Touch start for mobile (triggers as soon as she taps)
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents the actual "click" from happening
-            moveButton();
-        });
-
-        yesBtn.addEventListener('click', () => {
-            quiz.classList.add('hidden');
-            success.classList.remove('hidden');
-        });
-    </script>
+        setTimeout(() => confetti.remove(), 3000);
+    }
+}
+</script>
 </body>
 </html>
